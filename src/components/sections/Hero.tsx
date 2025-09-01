@@ -1,4 +1,22 @@
+"use client"
+
+import { Copy, Check } from "lucide-react"
+import { useState } from "react"
+
 export default function Hero() {
+  const [copied, setCopied] = useState(false)
+  const baseUrl = "https://theultimate-ng-university-api.vercel.app/api"
+
+  const copyToClipboard = async () => {
+    try {
+      await navigator.clipboard.writeText(baseUrl)
+      setCopied(true)
+      setTimeout(() => setCopied(false), 2000)
+    } catch (err) {
+      console.error('Failed to copy:', err)
+    }
+  }
+
   return (
     <section className="py-20 bg-gradient-to-br from-blue-600 via-purple-600 to-indigo-700 text-white">
       <div className="container mx-auto px-6 max-w-6xl">
@@ -11,9 +29,22 @@ export default function Hero() {
           </p>
           <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl p-8 max-w-2xl mx-auto">
             <div className="text-sm text-blue-200 mb-3">Base URL</div>
-            <code className="text-xl font-mono text-white font-semibold">
-              https://theultimate-ng-university-api.vercel.app/api
-            </code>
+            <div className="flex items-center justify-center gap-3">
+              <code className="text-xl font-mono text-white font-semibold">
+                {baseUrl}
+              </code>
+              <button
+                onClick={copyToClipboard}
+                className="p-2 hover:bg-white/20 rounded-lg transition-colors duration-200 group"
+                title="Copy to clipboard"
+              >
+                {copied ? (
+                  <Check className="w-5 h-5 text-green-300" />
+                ) : (
+                  <Copy className="w-5 h-5 text-blue-200 group-hover:text-white" />
+                )}
+              </button>
+            </div>
           </div>
         </div>
 
