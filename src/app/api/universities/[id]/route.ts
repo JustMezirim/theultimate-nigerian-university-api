@@ -20,7 +20,7 @@ export async function GET(request: Request, { params }: { params: Promise<{ id: 
       success: true,
       data: university,
     })
-  } catch (error) {
+  } catch {
     return NextResponse.json({ success: false, error: "Failed to fetch university" }, { status: 500 })
   }
 }
